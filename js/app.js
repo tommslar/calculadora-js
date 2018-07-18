@@ -23,6 +23,11 @@ var Calculadora = {
     operandoa:0,
  	operandob:0,
  	operacion:'',
+ 	res:0,
+ 	memoria:0,
+ 	borrarMemoria: function (){
+ 		memoria = 0;
+ 	},
  	borrarCeroInicial: function(){
  		if (display.innerHTML.startsWith("0") && (!display.innerHTML.includes('.')) ){
 			display.innerHTML = display.innerHTML.replace(0,'');
@@ -34,51 +39,61 @@ var Calculadora = {
 	},
 	init: function(){
 		this.uno.onclick = function(e){
+			Calculadora.borrarMemoria();
 			Calculadora.borrarCeroInicial();
      		display.innerHTML = display.innerHTML  + "1";
      		Calculadora.ochoDigitos();
   		}
   		this.dos.onclick = function(e){
+  			Calculadora.borrarMemoria();
   			Calculadora.borrarCeroInicial();
       		display.innerHTML = display.innerHTML  + "2";
       		Calculadora.ochoDigitos();
   		}
   		this.tres.onclick = function(e){
+  			Calculadora.borrarMemoria();
   			Calculadora.borrarCeroInicial();
       		display.innerHTML = display.innerHTML  + "3";
       		Calculadora.ochoDigitos();
   		}
   		this.cuatro.onclick = function(e){
+  			Calculadora.borrarMemoria();
   			Calculadora.borrarCeroInicial();
       		display.innerHTML = display.innerHTML  + "4";
       		Calculadora.ochoDigitos();
   		}
   		this.cinco.onclick = function(e){
+  			Calculadora.borrarMemoria();
   			Calculadora.borrarCeroInicial();
       		display.innerHTML = display.innerHTML  + "5";
       		Calculadora.ochoDigitos();
   		}
   		this.seis.onclick = function(e){
+  			Calculadora.borrarMemoria();
   			Calculadora.borrarCeroInicial();
       		display.innerHTML = display.innerHTML  + "6";
       		Calculadora.ochoDigitos();
   		}
   		this.siete.onclick = function(e){
+  			Calculadora.borrarMemoria();
   			Calculadora.borrarCeroInicial();
       		display.innerHTML = display.innerHTML  + "7";
       		Calculadora.ochoDigitos();
   		}
   		this.ocho.onclick = function(e){
+  			Calculadora.borrarMemoria();
   			Calculadora.borrarCeroInicial();
       		display.innerHTML = display.innerHTML  + "8";
       		Calculadora.ochoDigitos();
   		}
   		this.nueve.onclick = function(e){
+  			Calculadora.borrarMemoria();
   			Calculadora.borrarCeroInicial();
       		display.innerHTML = display.innerHTML  + "9";
       		Calculadora.ochoDigitos();
   		}
   		this.cero.onclick = function(e){
+  			Calculadora.borrarMemoria();
   			Calculadora.borrarCeroInicial();
       		display.innerHTML = display.innerHTML  + "0";
       		Calculadora.ochoDigitos();
@@ -103,6 +118,7 @@ var Calculadora = {
   			operandoa = 0;
   			operandob = 0;
   			operacion = "";
+  			memoria = 0;
   		}
   		this.suma.onclick = function(e){
       		operandoa = display.innerHTML;
@@ -125,14 +141,16 @@ var Calculadora = {
       		display.innerHTML = "";
   		}
   		this.igual.onclick = function(e){
-      		operandob = display.innerHTML;
-      		if ((operandob = '') || (operacion = '')){ // si operandob o el operador es igual a '', se asigna 0 y se resetea la operacion 
+  			if (memoria == 0){
+  				operandob = display.innerHTML;
+  			}
+      		if ((operandob == '') || (operacion == '')){ // si operandob o el operador es igual a '', se asigna 0 y se resetea la operacion 
       			operandoa = 0;
   				operandob = 0;
   				operacion = "";
   				display.innerHTML = "0";
+  				res = 0;
       		}
-      		var res = 0;
 			switch(operacion){
 			   case "+":
 			     res = parseFloat(operandoa) + parseFloat(operandob);
@@ -147,9 +165,8 @@ var Calculadora = {
 			     res = parseFloat(operandoa) / parseFloat(operandob);
 			     break;
   			}
-  			operandoa = 0;
-  			operandob = 0;
-  			operacion = "";
+  			operandoa = res; // para permitir operaciones en cadena
+  			memoria = operandob;
   			display.innerHTML = res;
   			Calculadora.ochoDigitos();
   		}
